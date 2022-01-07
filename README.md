@@ -32,3 +32,9 @@ And you can always check the current balance of an user by calling:
 ```
 jcn.get_balance("jaamo")
 ```
+
+If you want to run test script:
+
+```
+python3 test.py
+```
