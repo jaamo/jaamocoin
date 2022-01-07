@@ -24,24 +24,20 @@ class JaamoCoin(object):
             {
                 "index": 1,
                 "timestamp": time(),
-                "transactions": [{
-                    "sender": "god",
-                    "recipient": "thebank",
-                    "amount": 10,
-                }],
+                "sender": "god",
+                "recipient": "thebank",
+                "amount": 10,
+                "proof": 0,
                 "previous_hash": "A single JaamoCoin is worth of 500 000 Cinelli Supercorsa bicycles.",
 
             }
         ]
 
-        # Incoming items to be processed and added to blockchain.
-        self.transaction_queue = []
-
 
     #
-    # Adds new block to the blockchain.
+    # Adds new transaction and creates a block to the blockchain.
     #
-    def new_block(self):
+    def new_transaction(self, sender, recipient, amount):
 
         # Create new block.
         block = {
@@ -49,8 +45,10 @@ class JaamoCoin(object):
             "index": len(self.chain) + 1,
             # Add timestamp.
             "timestamp": time(),
-            # List of transactions in this block.
-            "transactions": self.transaction_queue,
+            # Transaction details.
+            "sender": sender,
+            "recipient": recipient,
+            "amount": amount,
             # This is the chain part of blockchain. Calculate has from previous block.
             # If the previous block is ever altered this hash changes and the
             # whole chain will change.
@@ -60,24 +58,8 @@ class JaamoCoin(object):
         # Mine a proof to this block.
         block["proof"] = self.mine_proof(block)
 
-        # All transactions have been added to the latest block.
-        # We can clear the transaction queue.
-        self.transaction_queue = []
-
         # Finally add our fresh new block to our blockchain!
         self.chain.append(block)
-
-
-    #
-    # Create new transaction to queue.
-    #
-    def new_transaction(self, sender, recipient, amount):
-        transaction = {
-            "sender": sender,
-            "recipient": recipient,
-            "amount": amount,
-        }
-        self.transaction_queue.append(transaction)
 
 
     #
@@ -136,11 +118,10 @@ class JaamoCoin(object):
     def get_balance(self, account):
         balance = 0
         for block in self.chain:
-            for transaction in block["transactions"]:
-                if transaction["sender"] == account:
-                    balance = balance - transaction["amount"]
-                if transaction["recipient"] == account:
-                    balance = balance + transaction["amount"]
+            if block["sender"] == account:
+                balance = balance - block["amount"]
+            if block["recipient"] == account:
+                balance = balance + block["amount"]
         return balance
 
     #
@@ -153,13 +134,11 @@ class JaamoCoin(object):
 # Init an object
 jcn = JaamoCoin()
 
-#jcn.new_transaction("thebank", "jaamo", 5)
-#jcn.new_transaction("jaamo", "valo", 1)
-#jcn.new_block()
-#jcn.new_transaction("jaamo", "mattiteppo", 1)
-#jcn.new_block()
-#jcn.print()
-#print(jcn.get_balance("thebank"))
-#print(jcn.get_balance("valo"))
-#print(jcn.get_balance("jaamo"))
-#print(jcn.get_balance("mattiteppo"))
+jcn.new_transaction("thebank", "jaamo", 5)
+jcn.new_transaction("jaamo", "valo", 1)
+jcn.new_transaction("jaamo", "mattiteppo", 1)
+jcn.print()
+print(jcn.get_balance("thebank"))
+print(jcn.get_balance("valo"))
+print(jcn.get_balance("jaamo"))
+print(jcn.get_balance("mattiteppo"))

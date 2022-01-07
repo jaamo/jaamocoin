@@ -16,11 +16,9 @@ python3 -i jaamocoin.py
 And then you can start playing around:
 
 ```
-jcn.new_transaction("The Bank", "jaamo", 10)
+jcn.new_transaction("thebank", "jaamo", 5)
 jcn.new_transaction("jaamo", "valo", 1)
-jcn.new_block()
-jcn.new_transaction("jaamo", "matti&teppo", 1)
-jcn.new_block()
+jcn.new_transaction("jaamo", "mattiteppo", 1)
 ```
 
 You can debug what's going on in the chain anytime:
