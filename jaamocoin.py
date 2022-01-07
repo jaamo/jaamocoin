@@ -39,6 +39,10 @@ class JaamoCoin(object):
     #
     def new_transaction(self, sender, recipient, amount):
 
+        if self.get_balance(sender) < amount:
+            print("Can't transfer %s JCN from an account '%s'. Balance is %s." % (amount, sender, self.get_balance(sender)))
+            return False
+
         # Create new block.
         block = {
             # Running index.
