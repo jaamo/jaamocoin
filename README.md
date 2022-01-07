@@ -9,7 +9,9 @@ I modified the code to support proof of work calculation.
 
 You can test this in Python console:
 
-`python3 -i jaamocoin.py`
+```
+python3 -i jaamocoin.py
+```
 
 And then you can start playing around:
 
@@ -22,7 +24,13 @@ jcn.new_block()
 ```
 
 You can debug what's going on in the chain anytime:
-`jcn.print()`
+
+```
+jcn.print()
+```
 
 And you can always check the current balance of an user by calling:
-`jcn.get_balance("jaamo")`
+
+```
+jcn.get_balance("jaamo")
+```
